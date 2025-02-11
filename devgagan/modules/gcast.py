@@ -1,4 +1,16 @@
-#devggn
+# ---------------------------------------------------
+# File Name: gcast.py
+# Description: A Pyrogram bot for downloading files from Telegram channels or groups 
+#              and uploading them back to Telegram.
+# Author: Gagan
+# GitHub: https://github.com/devgaganin/
+# Telegram: https://t.me/team_spy_pro
+# YouTube: https://youtube.com/@dev_gagan
+# Created: 2025-01-11
+# Last Modified: 2025-01-11
+# Version: 2.0.5
+# License: MIT License
+# ---------------------------------------------------
 
 import asyncio
 from pyrogram import filters
@@ -8,7 +20,11 @@ from devgagan.core.mongo.users_db import get_users
 
 async def send_msg(user_id, message):
     try:
-        await message.copy(chat_id=user_id)
+        x = await message.copy(chat_id=user_id)
+        try:
+            await x.pin()
+        except Exception:
+            await x.pin(both_sides=True)
     except FloodWait as e:
         await asyncio.sleep(e.x)
         return send_msg(user_id, message)
@@ -53,7 +69,7 @@ async def broadcast(_, message):
 
 
 
-@app.on_message(filters.command("announce") & filters.user(OWNER_ID))
+@app.on_message(filters.command("acast") & filters.user(OWNER_ID))
 async def announced(_, message):
     if message.reply_to_message:
       to_send=message.reply_to_message.id

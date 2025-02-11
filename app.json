@@ -30,7 +30,33 @@
       "description": "The user ID of the user whom you would like to add as OWNER.",
       "value": "owner_user_id_here",
       "required": true
+    },    
+    "FREEMIUM_LIMIT": {
+      "description": "Batch size for free users",
+      "value": "0",
+      "required": true
     },
+    "PREMIUM_LIMIT": {
+      "description": "Batch size for premium users",
+      "value": "500",
+      "required": true
+    },
+    "STRING": {
+      "description": "Enter premium account session string if you want to allow the paid users to upload upto 4GB",
+      "value": "",
+      "required": false
+    },
+    "WEBSITE_URL": {
+      "description": "Enter shortener website domain eg upshrink.com",
+      "value": "upshrink.com",
+      "required": false
+    },
+    "AD_API": {
+      "description": "Batch size for premium users",
+      "value": "52b4a2cf4687d81e7d3f8f2b7bc2943f618e78cb",
+      "required": false
+    },
+    
     "SUDO_USERS": {
       "description": "Other Admins' IDs (optional)",
       "value": "",
@@ -49,8 +75,7 @@
   },
   "buildpacks": [
     { "url": "heroku/python" },
-    { "url": "heroku/nodejs" },
-    { "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git" }
+    { "url": "https://github.com/heroku/heroku-buildpack-activestorage-preview" }
   ],
   "stack": "container"
 }

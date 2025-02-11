@@ -1,4 +1,16 @@
-#devggn
+# ---------------------------------------------------
+# File Name: eval.py 
+# Description: A Pyrogram bot for downloading files from Telegram channels or groups 
+#              and uploading them back to Telegram.
+# Author: Unknown
+# GitHub: https://github.com/devgaganin/
+# Telegram: https://t.me/team_spy_pro
+# YouTube: https://youtube.com/@dev_gagan
+# Created: 2025-01-11
+# Last Modified: 2025-01-11
+# Version: 2.0.5
+# License: MIT License
+# ---------------------------------------------------
 
 import os, re, subprocess, sys, traceback
 from inspect import getfullargspec
@@ -8,9 +20,6 @@ from pyrogram import filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from config import OWNER_ID
 from devgagan import app
-
-
-
 
 async def aexec(code, client, message):
     exec(
@@ -27,20 +36,20 @@ async def edit_or_reply(msg, **kwargs):
 
 
 @app.on_edited_message(
-    filters.command(["eval", "x"])
+    filters.command(["evv", "evr"])
     & filters.user(OWNER_ID)
     & ~filters.forwarded
     & ~filters.via_bot
 )
 @app.on_message(
-    filters.command(["eval", "x"])
+    filters.command(["evv", "evr"])
     & filters.user(OWNER_ID)
     & ~filters.forwarded
     & ~filters.via_bot
 )
 async def executor(client, message):
     if len(message.command) < 2:
-        return await edit_or_reply(message, text="<b>ᴡʜᴀᴛ ʏᴏᴜ ᴡᴀɴɴᴀ ᴇxᴇᴄᴜᴛᴇ ʙᴀʙʏ ?</b>")
+        return await edit_or_reply(message, text="<b>No command was given to execute!</b>")
     try:
         cmd = message.text.split(" ", maxsplit=1)[1]
     except IndexError:
@@ -68,7 +77,7 @@ async def executor(client, message):
         evaluation += stdout
     else:
         evaluation += "sᴜᴄᴄᴇss"
-    final_output = f"<b>⥤ ʀᴇsᴜʟᴛ :</b>\n<pre language='python'>{evaluation}</pre>"
+    final_output = f"<b>📕 ʀᴇsᴜʟᴛ :</b>\n<pre language='python'>{evaluation}</pre>"
     if len(final_output) > 4096:
         filename = "output.txt"
         with open(filename, "w+", encoding="utf8") as out_file:
@@ -86,7 +95,7 @@ async def executor(client, message):
         )
         await message.reply_document(
             document=filename,
-            caption=f"<b>⥤ ᴇᴠᴀʟ :</b>\n<code>{cmd[0:980]}</code>\n\n<b>⥤ ʀᴇsᴜʟᴛ :</b>\nᴀᴛᴛᴀᴄʜᴇᴅ ᴅᴏᴄᴜᴍᴇɴᴛ",
+            caption=f"<b>🔗 ᴇᴠᴀʟ :</b>\n<code>{cmd[0:980]}</code>\n\n<b>📕 ʀᴇsᴜʟᴛ :</b>\nᴀᴛᴛᴀᴄʜᴇᴅ ᴅᴏᴄᴜᴍᴇɴᴛ",
             quote=False,
             reply_markup=keyboard,
         )
@@ -117,7 +126,7 @@ async def runtime_func_cq(_, cq):
     await cq.answer(runtime, show_alert=True)
 
 
-@app.on_callback_query(filters.regex("forceclose"))
+@app.on_callback_query(filters.regex("fclose"))
 async def forceclose_command(_, CallbackQuery):
     callback_data = CallbackQuery.data.strip()
     callback_request = callback_data.split(None, 1)[1]
@@ -139,13 +148,13 @@ async def forceclose_command(_, CallbackQuery):
 
 
 @app.on_edited_message(
-    filters.command("sh")
+    filters.command("shll")
     & filters.user(OWNER_ID)
     & ~filters.forwarded
     & ~filters.via_bot
 )
 @app.on_message(
-    filters.command("sh")
+    filters.command("shll")
     & filters.user(OWNER_ID)
     & ~filters.forwarded
     & ~filters.via_bot
@@ -211,4 +220,7 @@ async def shellrunner(_, message):
     await message.stop_propagation()
 
 
-  
+@app.on_message(filters.command("restart") & filters.user(OWNER_ID))
+async def update(_, message):
+    await message.reply("Restarting ... ")
+    os.execl(sys.executable, sys.executable, "-m", "devgagan")
